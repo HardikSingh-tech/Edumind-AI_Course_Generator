@@ -27,8 +27,9 @@ public class SyllabusGenerationService {
 
         String prompt = """
             You are an expert curriculum designer and educator.
-            Design a structured, comprehensive multi-module syllabus on the topic: {topic}.
+            Design a concise, structured syllabus on the topic: {topic}.
             Target Audience: {targetAudience}.
+            Include 3 to 4 modules, each with 3 lessons, and keep descriptions brief (1-2 sentences).
             
             Strictly format your response as JSON according to this schema:
             {format}
