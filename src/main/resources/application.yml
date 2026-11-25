@@ -1,0 +1,36 @@
+server:
+  port: ${PORT:80}
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:}
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
+spring:
+  application:
+    name: edumind
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  ai:
+    openai:
+      api-key: ${SPRING_AI_OPENAI_API_KEY}
+      base-url: ${SPRING_AI_OPENAI_BASE_URL:https://generativelanguage.googleapis.com}
+      chat:
+        completions-path: /v1beta/openai/chat/completions
+        options:
+          model: ${SPRING_AI_OPENAI_CHAT_OPTIONS_MODEL:gemini-flash-lite-latest}
+          temperature: 0.7

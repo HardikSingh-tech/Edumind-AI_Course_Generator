@@ -1,0 +1,37 @@
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  timeout: 60000,
+});
+
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('edumind_auth_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+api.interceptors.response.use(
+  (response) => response.data,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('edumind_auth_token');
+      localStorage.removeItem('edumind_user');
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
+    }
+    const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || 'Something went wrong';
+    return Promise.reject(new Error(errorMessage));
+  }
+);
+
+export default api;
